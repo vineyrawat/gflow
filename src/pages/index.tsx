@@ -2,26 +2,9 @@ import Head from "next/head";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import { useCallback } from "react";
-import Particles from "react-tsparticles";
-import type { Container, Engine } from "tsparticles-engine";
-import { loadFull } from "tsparticles";
-
 export default function Home() {
   const { status } = useSession();
   const router = useRouter();
-
-  const particlesInit = useCallback(async (engine: Engine) => {
-    console.log(engine);
-    await loadFull(engine);
-  }, []);
-
-  const particlesLoaded = useCallback(
-    async (container: Container | undefined) => {
-      await console.log(container);
-    },
-    []
-  );
 
   if (status == "authenticated") {
     router.replace("/app");
@@ -35,84 +18,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Particles
-          id="tsparticles"
-          init={particlesInit}
-          loaded={particlesLoaded}
-          options={{
-            background: {
-              color: {
-                value: "#fff",
-              },
-            },
-            fpsLimit: 120,
-            interactivity: {
-              events: {
-                onClick: {
-                  enable: true,
-                  mode: "push",
-                },
-                onHover: {
-                  enable: true,
-                  mode: "repulse",
-                },
-                resize: true,
-              },
-              modes: {
-                push: {
-                  quantity: 4,
-                },
-                repulse: {
-                  distance: 200,
-                  duration: 0.4,
-                },
-              },
-            },
-            particles: {
-              color: {
-                value: "#0d47a1",
-              },
-              links: {
-                color: "#0d47a1",
-                distance: 150,
-                enable: true,
-                opacity: 0.5,
-                width: 1,
-              },
-              collisions: {
-                enable: true,
-              },
-              move: {
-                direction: "none",
-                enable: true,
-                outModes: {
-                  default: "bounce",
-                },
-                random: false,
-                speed: 6,
-                straight: false,
-              },
-              number: {
-                density: {
-                  enable: true,
-                  area: 800,
-                },
-                value: 80,
-              },
-              opacity: {
-                value: 0.5,
-              },
-              shape: {
-                type: "circle",
-              },
-              size: {
-                value: { min: 1, max: 5 },
-              },
-            },
-            detectRetina: true,
-          }}
-        />
-
         <section>
           <div className="max-w-screen-xl mx-auto px-4 py-28 gap-12 text-gray-600 md:px-8">
             <div className="space-y-5 max-w-4xl mx-auto text-center">
@@ -135,7 +40,7 @@ export default function Home() {
               <div className="items-center justify-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
                 <button
                   onClick={() => signIn("github")}
-                  className="px-5 flex items-center justify-center gap-x-3 py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100"
+                  className="px-5 flex items-center bg-white justify-center gap-x-3 py-2.5 border rounded-lg"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
