@@ -8,9 +8,7 @@ const ProfileDropDown = (props: any) => {
   const profileRef: any = useRef();
 
   const navigation = [
-    // { title: "Dashboard", path: "javascript:void(0)" },
-    // { title: "Settings", path: "javascript:void(0)" },
-    { title: "Log out", path: "javascript:void(0)", onClick: () => signOut() },
+    { title: "Log out", path: "#", onClick: () => signOut() },
   ];
 
   useEffect(() => {
@@ -44,10 +42,9 @@ const ProfileDropDown = (props: any) => {
         }`}
       >
         {navigation.map((item, idx) => (
-          <li>
+          <li key={idx}>
             <a
               onClick={item.onClick}
-              key={idx}
               className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
               href={item.path}
             >
@@ -63,22 +60,15 @@ const ProfileDropDown = (props: any) => {
 export default () => {
   const [menuState, setMenuState] = useState(false);
   const { data: session, status } = useSession();
-  // Replace javascript:void(0) path with your path
-  const navigation = [
-    // { title: "Customers", path: "javascript:void(0)" },
-    // { title: "Careers", path: "javascript:void(0)" },
-    // { title: "Guides", path: "javascript:void(0)" },
-    // { title: "Partners", path: "javascript:void(0)" },
-    { title: "Logout", path: "javascript:void(0)", onClick: () => signOut() },
-  ];
+
+  const navigation = [{ title: "Logout", path: "#", onClick: () => signOut() }];
+
   return (
     <nav className="bg-white border-b">
       <div className="flex items-center space-x-8 py-3 px-4 max-w-screen-xl mx-auto md:px-8">
         <div className="flex-none lg:flex-initial">
-          <a href="javascript:void(0)">
-            <h1 className="text-transparent text-2xl font-bold bg-clip-text bg-gradient-to-r from-[#4F46E5] to-[#E114E5]">
-              GBooks!
-            </h1>
+          <a href="#">
+            <h1 className="text-2xl font-bold">GFlows!</h1>
             {/* <img
               src="https://www.floatui.com/logo.svg"
               width={120}
@@ -88,44 +78,9 @@ export default () => {
           </a>
         </div>
         <div className="flex-1 flex items-center justify-between">
-          {/* <div
-            className={`bg-white absolute z-20 w-full top-16 left-0 p-4 border-b lg:static lg:block lg:border-none ${
-              menuState ? "" : "hidden"
-            }`}
-          >
-            <ul className="mt-12 space-y-5 lg:flex lg:space-x-6 lg:space-y-0 lg:mt-0">
-              {navigation.map((item, idx) => (
-                <li key={idx} className="text-gray-600 hover:text-gray-900">
-                  <a href={item.path}>{item.title}</a>
-                </li>
-              ))}
-            </ul>
-            <ProfileDropDown class="mt-5 pt-5 border-t lg:hidden" />
-          </div> */}
           <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-6">
-            {/* <form className="flex items-center space-x-2 border rounded-md p-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 flex-none text-gray-300"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-              <input
-                className="w-full outline-none appearance-none placeholder-gray-500 text-gray-500 sm:w-auto"
-                type="text"
-                placeholder="Search"
-              />
-            </form> */}
             <div className="flex flex-col items-end">
-              <h1 className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-[#4F46E5] to-[#E114E5]">
+              <h1 className="font-bold bg-clip-text bg-gradient-to-r">
                 {session?.user?.name}
               </h1>
               <h1 className="text-sm text-gray-600">{session?.user?.email}</h1>

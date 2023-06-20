@@ -11,7 +11,7 @@ export default function App({
 }: AppProps) {
   return (
     <SessionProvider session={session}>
-      <main className={inter.className}>
+      <main className={inter.className + " bg-gray-100 min-h-screen"}>
         <Component {...pageProps} />
       </main>
     </SessionProvider>
