@@ -6,6 +6,10 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AiOutlineLock } from "react-icons/ai";
+import { IoEarthOutline } from "react-icons/io5";
+import { BiCodeAlt } from "react-icons/bi";
+import { TbLicense } from "react-icons/tb";
 
 export default function Repositories() {
   const { status }: any = useSession();
@@ -26,7 +30,7 @@ export default function Repositories() {
       </Head>
       <main>
         <Navbar />
-        <div>
+        <div className="container mt-10 mx-auto">
           <RepositoriesData />
         </div>
       </main>
@@ -49,12 +53,51 @@ function RepositoriesData() {
       <div className="flex justify-center gap-2 flex-col items-center h-40 ">
         <h1>Unable to fetch data</h1>
         <p>{error!.message ?? ""}</p>
-        <DarkButton onClick={fetchData} />
+        <DarkButton onClick={fetchData}>Retry</DarkButton>
       </div>
     );
   }
 
-  return <></>;
+  if (repositories.length === 0) {
+    return (
+      <div className="flex justify-center items-center h-40 ">
+        <h1>No repositories found</h1>
+        <DarkButton onClick={fetchData}>Retry</DarkButton>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      {repositories.map((repository) => {
+        return (
+          <>
+            <div className="p-4 rounded-sm bg-white flex flex-col gap-2">
+              <div className="flex gap-2 items-center">
+                <h1 className="text-xl font-semibold">{repository.name}</h1>
+                {repository.private ? (
+                  <AiOutlineLock size={20} />
+                ) : (
+                  <IoEarthOutline size={20} />
+                )}
+              </div>
+              <p>{repository.description}</p>
+              <div className="flex gap-2">
+                <div className="flex gap-1 items-center">
+                  <BiCodeAlt />
+                  <p>{repository.language}</p>
+                </div>
+                <div className="flex gap-1 items-center">
+                  <TbLicense />
+                  <p>{repository?.license?.name ?? "NA"}</p>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      })}
+    </div>
+  );
 }
 
 interface MainCardProps {
