@@ -3,6 +3,7 @@ import GitHubProvider from "next-auth/providers/github";
 import { use } from "react";
 
 export default NextAuth({
+  secret: process.env.AUTH_SECRET,
   providers: [
     // GoogleProvider({
     // clientId: process.env.GOOGLE_CLIENT_ID ?? "",
@@ -11,6 +12,7 @@ export default NextAuth({
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID ?? "",
       clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "",
+      authorization: { params: { scope: "project workflow" } },
     }),
   ],
   callbacks: {
@@ -19,6 +21,8 @@ export default NextAuth({
         session.user.profile = token.profile;
         session.user.account = token.account;
       }
+
+      console.log(token);
 
       return Promise.resolve(session);
     },

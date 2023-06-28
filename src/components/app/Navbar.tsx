@@ -11,12 +11,14 @@ const ProfileDropDown = (props: any) => {
     { title: "Log out", path: "#", onClick: () => signOut() },
   ];
 
-  useEffect(() => {
-    const handleDropDown = (e: any) => {
-      if (!profileRef.current.contains(e.target)) setState(false);
-    };
-    document.addEventListener("click", handleDropDown);
-  }, []);
+  // useEffect(() => {
+  //   const handleDropDown = (event: any) => {
+  //     if (!profileRef.current.contains(event.target)) {
+  //       setState(false);
+  //     }
+  //   };
+  //   document.addEventListener("click", handleDropDown);
+  // }, []);
 
   return (
     <div className={`relative ${props.class}`}>
@@ -31,10 +33,6 @@ const ProfileDropDown = (props: any) => {
             className="w-full h-full rounded-full"
           />
         </button>
-        <div className="lg:hidden">
-          <span className="block">Micheal John</span>
-          <span className="block text-sm text-gray-500">john@gmail.com</span>
-        </div>
       </div>
       <ul
         className={`bg-white top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 ${
@@ -65,7 +63,7 @@ export default () => {
 
   return (
     <nav className="bg-white border-b">
-      <div className="flex items-center space-x-8 py-3 px-4 max-w-screen-xl mx-auto md:px-8">
+      <div className="flex items-center py-3 px-4 container mx-auto">
         <div className="flex-none lg:flex-initial">
           <a href="#">
             <h1 className="text-2xl font-bold">GFlows!</h1>
