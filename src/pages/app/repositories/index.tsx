@@ -10,6 +10,7 @@ import { AiOutlineLock } from "react-icons/ai";
 import { IoEarthOutline } from "react-icons/io5";
 import { BiCodeAlt } from "react-icons/bi";
 import { TbLicense } from "react-icons/tb";
+import AppLayout from "@/components/app/AppLayout";
 
 export default function Repositories() {
   const { status }: any = useSession();
@@ -28,12 +29,7 @@ export default function Repositories() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <Navbar />
-        <div className="container mt-10 mx-auto">
-          <RepositoriesData />
-        </div>
-      </main>
+      <AppLayout component={<RepositoriesData />} />
     </>
   );
 }

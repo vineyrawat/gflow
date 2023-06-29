@@ -1,9 +1,12 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export default function App({
   Component,
@@ -11,9 +14,11 @@ export default function App({
 }: AppProps) {
   return (
     <SessionProvider session={session}>
-      <main className={inter.className + " bg-gray-100 min-h-screen"}>
-        <Component {...pageProps} />
-      </main>
+      <div className="">
+        <main className={poppins.className}>
+          <Component {...pageProps} />
+        </main>
+      </div>
     </SessionProvider>
   );
 }

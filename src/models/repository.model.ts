@@ -77,7 +77,7 @@ export interface Repository {
   archived?: boolean;
   disabled?: boolean;
   openIssuesCount?: number;
-  license?: null;
+  license?: License;
   allowForking?: boolean;
   isTemplate?: boolean;
   webCommitSignoffRequired?: boolean;
@@ -88,6 +88,10 @@ export interface Repository {
   watchers?: number;
   defaultBranch?: string;
   permissions?: Permissions;
+}
+
+export interface License {
+  name?: string;
 }
 
 export interface Owner {
