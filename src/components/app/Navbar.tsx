@@ -1,4 +1,5 @@
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 
 // Profile Dropdown
@@ -28,7 +29,10 @@ const ProfileDropDown = (props: any) => {
           className="w-10 h-10 outline-none rounded-full ring-offset-2 ring-gray-200 ring-2 lg:focus:ring-indigo-600"
           onClick={() => setState(!state)}
         >
-          <img
+          <Image
+            height={40}
+            width={40}
+            alt="profile"
             src={session?.user?.image ?? ""}
             className="w-full h-full rounded-full"
           />
@@ -55,7 +59,7 @@ const ProfileDropDown = (props: any) => {
   );
 };
 
-export default () => {
+export default function Navbar() {
   const [menuState, setMenuState] = useState(false);
   const { data: session, status } = useSession();
 
@@ -125,4 +129,4 @@ export default () => {
       </div>
     </nav>
   );
-};
+}
