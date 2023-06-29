@@ -19,14 +19,18 @@ const useRepositores = () => {
     setLoading(true);
     setError(null);
     setRepositories([]);
-    fetch(BASE_URL + `/users/${data?.user.profile.login}/repos`, {
+    fetch(BASE_URL + `/user/repos`, {
       headers: {
         Accept: "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
+        Authorization: `Bearer ${data.user.account.access_token}`,
       },
     })
       .then((response) => response.json())
       .then((data) => {
+        if (data?.message == "Requires authentication") {
+          throw data;
+        }
         setRepositories(data);
       })
       .catch((error) => setError(error))
