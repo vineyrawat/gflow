@@ -70,14 +70,27 @@ function RepositoriesData() {
           <>
             <div className="p-4 rounded-sm bg-white flex flex-col gap-2">
               <div className="flex gap-2 items-center">
-                <h1 className="text-xl font-semibold">{repository.name}</h1>
+                <Link href={`/app/repositories/${repository.name ?? ""}`}>
+                  <h1 className="text-xl font-semibold hover:underline">
+                    {repository.name}
+                  </h1>
+                </Link>
                 {repository.private ? (
                   <AiOutlineLock size={20} />
                 ) : (
                   <IoEarthOutline size={20} />
                 )}
               </div>
-              <p>{repository.description}</p>
+              {repository.description && <p>{repository.description}</p>}
+              {(repository.topics?.length ?? 0) > 0 && (
+                <div className="flex gap-2">
+                  {repository.topics?.map((i) => (
+                    <span className="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                      {i}
+                    </span>
+                  ))}
+                </div>
+              )}
               <div className="flex gap-2">
                 <div className="flex gap-1 items-center">
                   <BiCodeAlt />
