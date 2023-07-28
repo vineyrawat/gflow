@@ -1,7 +1,6 @@
-import Navbar from "@/components/app/Navbar";
 import { DarkButton } from "@/components/global/Buttons";
 import LoadingSpinner from "@/components/global/LoadingSpinner";
-import useRepositores from "@/services/customHooks";
+import { useRepositores } from "@/services/customHooks";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
@@ -67,42 +66,46 @@ function RepositoriesData() {
     <div className="flex flex-col gap-4">
       {repositories.map((repository) => {
         return (
-          <>
-            <div className="p-4 rounded-sm bg-white flex flex-col gap-2">
-              <div className="flex gap-2 items-center">
-                <Link href={`/app/repositories/${repository.name ?? ""}`}>
-                  <h1 className="text-xl font-semibold hover:underline">
-                    {repository.name}
-                  </h1>
-                </Link>
-                {repository.private ? (
-                  <AiOutlineLock size={20} />
-                ) : (
-                  <IoEarthOutline size={20} />
-                )}
-              </div>
-              {repository.description && <p>{repository.description}</p>}
-              {(repository.topics?.length ?? 0) > 0 && (
-                <div className="flex gap-2">
-                  {repository.topics?.map((i) => (
-                    <span className="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
-                      {i}
-                    </span>
-                  ))}
-                </div>
+          <div
+            key={repository.id}
+            className="p-4 rounded-sm bg-white flex flex-col gap-2"
+          >
+            <div className="flex gap-2 items-center">
+              <Link href={`/app/repositories/${repository.name ?? ""}`}>
+                <h1 className="text-xl font-semibold hover:underline">
+                  {repository.name}
+                </h1>
+              </Link>
+              {repository.private ? (
+                <AiOutlineLock size={20} />
+              ) : (
+                <IoEarthOutline size={20} />
               )}
+            </div>
+            {repository.description && <p>{repository.description}</p>}
+            {(repository.topics?.length ?? 0) > 0 && (
               <div className="flex gap-2">
-                <div className="flex gap-1 items-center">
-                  <BiCodeAlt />
-                  <p>{repository.language}</p>
-                </div>
-                <div className="flex gap-1 items-center">
-                  <TbLicense />
-                  <p>{repository?.license?.name ?? "NA"}</p>
-                </div>
+                {repository.topics?.map((i) => (
+                  <span
+                    key={i}
+                    className="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded"
+                  >
+                    {i}
+                  </span>
+                ))}
+              </div>
+            )}
+            <div className="flex gap-2">
+              <div className="flex gap-1 items-center">
+                <BiCodeAlt />
+                <p>{repository.language}</p>
+              </div>
+              <div className="flex gap-1 items-center">
+                <TbLicense />
+                <p>{repository?.license?.name ?? "NA"}</p>
               </div>
             </div>
-          </>
+          </div>
         );
       })}
     </div>
@@ -115,18 +118,4 @@ interface MainCardProps {
   subtitle: string;
   onClick?: () => void;
   icon?: JSX.Element;
-}
-
-function MainCard(props: MainCardProps) {
-  return (
-    <Link href={props.path ?? "#"} onClick={props.onClick}>
-      <div className="p-5 min-h-[130px] rounded-sm bg-white shadow-md outline outline-1 outline-gray-200">
-        <div className="flex items-center gap-2">
-          {props.icon}
-          <h1 className="text-xl font-semibold">{props.title}</h1>
-        </div>
-        <p>{props.subtitle}</p>
-      </div>
-    </Link>
-  );
 }

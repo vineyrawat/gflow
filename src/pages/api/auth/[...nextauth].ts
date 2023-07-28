@@ -22,8 +22,6 @@ export default NextAuth({
         session.user.account = token.account;
       }
 
-      console.log(token);
-
       return Promise.resolve(session);
     },
     async jwt({ account, token, profile }) {

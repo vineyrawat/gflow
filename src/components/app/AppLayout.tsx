@@ -22,7 +22,7 @@ export default function AppLayout({ component }: { component: JSX.Element }) {
 
 function BreadCumb() {
   const router = useRouter();
-  const { pathname } = router;
+  const { asPath } = router;
   const [items, setItems] = useState<Array<any>>([]);
 
   function toCamelCase(value: string) {
@@ -31,14 +31,14 @@ function BreadCumb() {
 
   useEffect(() => {
     setItems(
-      pathname
+      asPath
         .split("/")
         .map((i) => toCamelCase(i))
         .filter((i) => i != "")
         .map((i, idx) => {
           return {
             text: i,
-            href: `/${pathname
+            href: `/${asPath
               .split("/")
               .slice(0, idx + 2)
               .join("/")}`,
@@ -54,34 +54,32 @@ function BreadCumb() {
     >
       <ol className="inline-flex items-center space-x-1 md:space-x-3">
         {items.map((i, idx) => (
-          <>
-            <li aria-current="page">
-              <div className="flex items-center">
-                {idx == 0 ? (
-                  <RxDotFilled className="text-gray-500" />
-                ) : (
-                  <svg
-                    aria-hidden="true"
-                    className="w-6 h-6 text-gray-400"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                )}
-                <Link href={i.href}>
-                  <span className="ml-1 hover:text-gray-800 text-sm font-medium text-gray-500 md:ml-2">
-                    {i.text}
-                  </span>
-                </Link>
-              </div>
-            </li>
-          </>
+          <li key={idx} aria-current="page">
+            <div className="flex items-center">
+              {idx == 0 ? (
+                <RxDotFilled className="text-gray-500" />
+              ) : (
+                <svg
+                  aria-hidden="true"
+                  className="w-6 h-6 text-gray-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              )}
+              <Link href={i.href}>
+                <span className="ml-1 hover:text-gray-800 truncate text-sm font-medium text-gray-500 md:ml-2">
+                  {i.text}
+                </span>
+              </Link>
+            </div>
+          </li>
         ))}
       </ol>
     </nav>
